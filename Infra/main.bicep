@@ -1,5 +1,5 @@
 targetScope = 'subscription'
-param rgName string = 'rg-cosmosdb-20250425'
+param rgName string = 'ConsultantPortalen-rg'
 param location string = 'swedencentral'
 param cosmosAccountName string = 'cosmosdbaccount20250425'
 param databaseName string = 'ConsultantDB'

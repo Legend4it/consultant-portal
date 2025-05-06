@@ -4168,11 +4168,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Development\\WorkSpace\\consultant-portal\\ConsultantPortal.Api\\ConsultantPortal.Api.csproj",
+      "projectUniqueName": "D:\\WorkSpace\\consultant-portal\\ConsultantPortal.Api\\ConsultantPortal.Api.csproj",
       "projectName": "ConsultantPortal.Api",
-      "projectPath": "C:\\Development\\WorkSpace\\consultant-portal\\ConsultantPortal.Api\\ConsultantPortal.Api.csproj",
+      "projectPath": "D:\\WorkSpace\\consultant-portal\\ConsultantPortal.Api\\ConsultantPortal.Api.csproj",
       "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
-      "outputPath": "C:\\Development\\WorkSpace\\consultant-portal\\ConsultantPortal.Api\\obj\\",
+      "outputPath": "D:\\WorkSpace\\consultant-portal\\ConsultantPortal.Api\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\Admin\\AppData\\Roaming\\NuGet\\NuGet.Config",

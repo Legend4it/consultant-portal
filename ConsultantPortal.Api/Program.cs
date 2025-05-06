@@ -1,41 +1,76 @@
+using Microsoft.Azure.Cosmos;
+using Microsoft.Extensions.Options;
+using ConsultantPortal.Api.Models;
+using ConsultantPortal.Api.Services;
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
-builder.Services.AddOpenApi();
+// Load Configuration from appsettings.json
+builder.Configuration.AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
+
+builder.Services.Configure<CosmosDbSettings>(
+    builder.Configuration.GetSection("CosmosDb")
+);
+
+// Register CosmosClient with DI
+builder.Services.AddSingleton<CosmosClient>(sp =>
+{
+    var settings = sp.GetRequiredService<IOptions<CosmosDbSettings>>().Value;
+    return new CosmosClient(settings.Account, settings.Key);
+});
+
+
+// Register Services
+builder.Services.AddSingleton<ICosmosDbService, CosmosDbService>();
+builder.Services.AddSingleton<CosmosDbInitializer>();
+
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
+// Initialize Cosmos DB on startup
+using (var scope = app.Services.CreateScope())
 {
-    app.MapOpenApi();
+    var cosmosDbInitializer = scope.ServiceProvider.GetRequiredService<CosmosDbInitializer>();
+    await cosmosDbInitializer.InitializeAsync();
 }
 
-app.UseHttpsRedirection();
-
-var summaries = new[]
+// Middleware for error handling
+app.Use(async (context, next) =>
 {
-    "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-};
+    try
+    {
+        await next.Invoke();
+    }
+    catch (Exception ex)
+    {
+        context.Response.StatusCode = 500;
+        await context.Response.WriteAsJsonAsync(new { error = ex.Message });
+    }
+});
 
-app.MapGet("/weatherforecast", () =>
+// minimal API for TimeLog
+var timeLogGroup = app.MapGroup("/api/timelogs").WithTags("TimeLogs"); // For grouping in Swagger
+
+timeLogGroup.MapGet("/{userId}", async (string userId, ICosmosDbService db) =>
 {
-    var forecast =  Enumerable.Range(1, 5).Select(index =>
-        new WeatherForecast
-        (
-            DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-            Random.Shared.Next(-20, 55),
-            summaries[Random.Shared.Next(summaries.Length)]
-        ))
-        .ToArray();
-    return forecast;
-})
-.WithName("GetWeatherForecast");
+    var logs = await db.GetTimeLogsAsync(userId);
+    return Results.Ok(logs);
+});
+
+timeLogGroup.MapPost("/", async (TimeLog log, ICosmosDbService db) =>
+{
+    var saved = await db.AddTimeLogAsync(log);
+    return Results.Created($"/api/timelogs/{saved.UserId}/{saved.id}", saved);
+});
+
+timeLogGroup.MapDelete("/{userId}/{id}", async (string userId, string id, ICosmosDbService db) =>
+{
+    await db.DeleteTimeLogAsync(id, userId);
+    return Results.NoContent();
+});
+
 
 app.Run();
 
-record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
-{
-    public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
-}
+
+
