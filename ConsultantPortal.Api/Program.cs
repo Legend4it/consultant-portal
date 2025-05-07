@@ -2,27 +2,19 @@ using Microsoft.Azure.Cosmos;
 using Microsoft.Extensions.Options;
 using ConsultantPortal.Api.Models;
 using ConsultantPortal.Api.Services;
+using ConsultantPortal.Api.Helper;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Load Configuration from appsettings.json
-builder.Configuration.AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
 
-builder.Services.Configure<CosmosDbSettings>(
-    builder.Configuration.GetSection("CosmosDb")
-);
+
 
 // Register CosmosClient with DI
-builder.Services.AddSingleton<CosmosClient>(sp =>
-{
-    var settings = sp.GetRequiredService<IOptions<CosmosDbSettings>>().Value;
-    return new CosmosClient(settings.Account, settings.Key);
-});
+builder.Services.RegisterCosmosDbClient();
 
 
 // Register Services
-builder.Services.AddSingleton<ICosmosDbService, CosmosDbService>();
-builder.Services.AddSingleton<CosmosDbInitializer>();
+builder.Services.RegisterCosmosDbService();
 
 
 var app = builder.Build();
