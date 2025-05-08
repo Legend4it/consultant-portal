@@ -2,10 +2,11 @@ using ConsultantPortal.Api.Models;
 
 namespace ConsultantPortal.Api.Services;
 
-public interface ICosmosDbService
+public interface ICosmosDbService<T>
 {
-    Task<TimeLog> AddTimeLogAsync(TimeLog log);
-    Task<IEnumerable<TimeLog>> GetTimeLogsAsync(string userId);
-    Task<TimeLog?> GetTimeLogByIdAsync(string id, string userId);
-    Task DeleteTimeLogAsync(string id, string userId);
+    Task<IEnumerable<T>> GetItemsAsync(string query);
+    Task<T?> GetItemAsync(string id);
+    Task<T> CreateItemAsync(T item);
+    Task<T> UpdateItemAsync(string id, T item);
+    Task<bool> DeleteItemAsync(string id);
 }

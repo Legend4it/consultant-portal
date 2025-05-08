@@ -1,5 +1,3 @@
-using Microsoft.Azure.Cosmos;
-using Microsoft.Extensions.Options;
 using ConsultantPortal.Api.Models;
 using ConsultantPortal.Api.Services;
 using ConsultantPortal.Api.Helper;
@@ -8,13 +6,15 @@ var builder = WebApplication.CreateBuilder(args);
 
 
 
+builder.AddCosmosDbService()
+    .AddAzureOpenAIClientService()
+    .BuildServices(service => service
+        .AddCosmosService<TimeLog>()
+        .AddCosmosService<Project>()
+        .AddCosmosService<Client>()
+        .AddCosmosService<Summary>()
+        );
 
-// Register CosmosClient with DI
-builder.Services.RegisterCosmosDbClient();
-
-
-// Register Services
-builder.Services.RegisterCosmosDbService();
 
 
 var app = builder.Build();
@@ -40,27 +40,8 @@ app.Use(async (context, next) =>
     }
 });
 
-// minimal API for TimeLog
-var timeLogGroup = app.MapGroup("/api/timelogs").WithTags("TimeLogs"); // For grouping in Swagger
 
-timeLogGroup.MapGet("/{userId}", async (string userId, ICosmosDbService db) =>
-{
-    var logs = await db.GetTimeLogsAsync(userId);
-    return Results.Ok(logs);
-});
-
-timeLogGroup.MapPost("/", async (TimeLog log, ICosmosDbService db) =>
-{
-    var saved = await db.AddTimeLogAsync(log);
-    return Results.Created($"/api/timelogs/{saved.UserId}/{saved.id}", saved);
-});
-
-timeLogGroup.MapDelete("/{userId}/{id}", async (string userId, string id, ICosmosDbService db) =>
-{
-    await db.DeleteTimeLogAsync(id, userId);
-    return Results.NoContent();
-});
-
+app.MapAllEndpoints();
 
 app.Run();
 

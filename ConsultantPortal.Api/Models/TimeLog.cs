@@ -1,11 +1,15 @@
+using System.Data;
+using Newtonsoft.Json;
+
 namespace ConsultantPortal.Api.Models;
 
 public class TimeLog
 {
-    public string? id { get; set; }
-    public string? UserId { get; set; }
-    public string? Client { get; set; }
-    public string? Date { get; set; }
+    [JsonProperty("id")]
+    public string Id { get; set; } = Guid.NewGuid().ToString();
+    public string? ProjectId { get; set; }
+    public string? ClientId { get; set; }
+    public DateTime? Date { get; set; }
     public double Hours { get; set; }
     public string? Description { get; set; }
 }

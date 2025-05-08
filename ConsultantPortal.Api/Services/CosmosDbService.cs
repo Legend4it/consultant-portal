@@ -2,59 +2,56 @@
 using ConsultantPortal.Api.Models;
 using Microsoft.Azure.Cosmos;
 
-
 namespace ConsultantPortal.Api.Services;
 
-public class CosmosDbService : ICosmosDbService
+public class CosmosDbService<T> : ICosmosDbService<T> where T : class
 {
     private readonly Container _container;
 
-    public CosmosDbService(CosmosClient client, IConfiguration config)
+    public CosmosDbService(CosmosClient client, string databaseName, string containerName)
     {
-        var dbName = config["CosmosDb:DatabaseName"];
-        var containerName = config["CosmosDb:ContainerName"];
-        _container = client.GetContainer(dbName, containerName);
+        _container = client.GetContainer(databaseName, containerName);
     }
-
-    public async Task<TimeLog> AddTimeLogAsync(TimeLog log)
+    public async Task<IEnumerable<T>> GetItemsAsync(string query)
     {
-        log.id ??= Guid.NewGuid().ToString();
-        var response = await _container.CreateItemAsync(log, new PartitionKey(log.UserId));
-        return response.Resource;
-    }
-
-    public async Task<IEnumerable<TimeLog>> GetTimeLogsAsync(string userId)
-    {
-        var query = new QueryDefinition("SELECT * FROM c WHERE c.UserId = @userId")
-            .WithParameter("@userId", userId);
-
-        var result = new List<TimeLog>();
-        var iterator = _container.GetItemQueryIterator<TimeLog>(query);
-
+        var iterator = _container.GetItemQueryIterator<T>(new QueryDefinition(query));
+        var results = new List<T>();
         while (iterator.HasMoreResults)
         {
-            var page = await iterator.ReadNextAsync();
-            result.AddRange(page);
+            results.AddRange(await iterator.ReadNextAsync());
         }
-
-        return result;
+        return results;
     }
-
-    public async Task<TimeLog?> GetTimeLogByIdAsync(string id, string userId)
+    public async Task<T?> GetItemAsync(string id)
     {
         try
         {
-            var response = await _container.ReadItemAsync<TimeLog>(id, new PartitionKey(userId));
-            return response.Resource;
+            var response = await _container.ReadItemAsync<T>(id, PartitionKey.None);
+            return response;
         }
-        catch (CosmosException ex) when (ex.StatusCode == System.Net.HttpStatusCode.NotFound)
+        catch (CosmosException e) when (e.StatusCode == System.Net.HttpStatusCode.NotFound)
         {
             return null;
         }
     }
+    public async Task<T> CreateItemAsync(T item) => (await _container.CreateItemAsync<T>(item)).Resource;
 
-    public async Task DeleteTimeLogAsync(string id, string userId)
+    public async Task<T> UpdateItemAsync(string id, T item) => (await _container.UpsertItemAsync(item, PartitionKey.None)).Resource;
+
+
+    public async Task<bool> DeleteItemAsync(string id)
     {
-        await _container.DeleteItemAsync<TimeLog>(id, new PartitionKey(userId));
+        try
+        {
+            await _container.DeleteItemAsync<T>(id, PartitionKey.None);
+            return true;
+        }
+        catch (CosmosException e) when (e.StatusCode != System.Net.HttpStatusCode.NotFound)
+        {
+            return false;
+        }
     }
+
+
+
 }

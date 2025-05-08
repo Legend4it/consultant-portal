@@ -1,3 +1,4 @@
+using ConsultantPortal.Api.Models;
 using Microsoft.Azure.Cosmos;
 
 namespace ConsultantPortal.Api.Services;
@@ -18,12 +19,28 @@ public class CosmosDbInitializer
 
     public async Task InitializeAsync()
     {
-        var dbName = _config["CosmosDb:DatabaseName"];
-        var containerName = _config["CosmosDb:ContainerName"];
-        var partitionKey = "/UserId";
+        var settings = _config.GetSection("CosmosDb").Get<CosmosDbSettings>();
+        var dbName = settings.DatabaseName;
+        var prefix = settings.ContainerPrefix;
+        var partitionKey = "/id";
 
-        var database = await _cosmosClient.CreateDatabaseIfNotExistsAsync(dbName);
-        await database.Database.CreateContainerIfNotExistsAsync(
-            new ContainerProperties(containerName, partitionKey));
+        await _cosmosClient.CreateDatabaseIfNotExistsAsync(dbName);
+        var db = _cosmosClient.GetDatabase(dbName);
+
+        Type[] entityTypes = {
+        typeof(TimeLog),
+        typeof(Project),
+        typeof(Client),
+        typeof(Summary)};
+
+        foreach (var type in entityTypes)
+        {
+            var containerName = $"{prefix}-{type.Name.ToLowerInvariant()}";
+            await db.CreateContainerIfNotExistsAsync(new ContainerProperties
+            {
+                Id = containerName,
+                PartitionKeyPath = partitionKey
+            });
+        }
     }
 }
