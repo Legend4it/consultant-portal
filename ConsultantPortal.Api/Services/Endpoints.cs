@@ -112,9 +112,7 @@ public static class Endpoints
                 messages,
                 new ChatCompletionOptions
                 {
-                    Temperature = 0.7f,
-                    FrequencyPenalty = 0f,
-                    PresencePenalty = 0f,
+                    MaxOutputTokenCount = 100
                 }
             );
 
