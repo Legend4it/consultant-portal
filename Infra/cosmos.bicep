@@ -25,7 +25,8 @@ resource cosmosAccount 'Microsoft.DocumentDB/databaseAccounts@2023-04-15' = {
 }
 
 resource database 'Microsoft.DocumentDB/databaseAccounts/sqlDatabases@2023-04-15' = {
-  name: '${cosmosAccount.name}/${databaseName}'
+  name: databaseName
+  parent: cosmosAccount
   properties: {
     resource: {
       id: databaseName
@@ -33,3 +34,7 @@ resource database 'Microsoft.DocumentDB/databaseAccounts/sqlDatabases@2023-04-15
     options: {}
   }
 }
+
+
+output cosmosAccountEndpoint string = cosmosAccount.properties.documentEndpoint
+// output cosmosAccountKey      string = listKeys(cosmosAccount.id, '2021-04-15').primaryMasterKey
