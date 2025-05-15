@@ -1,0 +1,13 @@
+D:\WorkSpace\consultant-portal\src\ConsultantPortal.Shared\Models\bin\Debug\net9.0\ConsultantPortal.Shared.Models.deps.json
+D:\WorkSpace\consultant-portal\src\ConsultantPortal.Shared\Models\bin\Debug\net9.0\ConsultantPortal.Shared.Models.dll
+D:\WorkSpace\consultant-portal\src\ConsultantPortal.Shared\Models\bin\Debug\net9.0\ConsultantPortal.Shared.Models.pdb
+D:\WorkSpace\consultant-portal\src\ConsultantPortal.Shared\Models\obj\Debug\net9.0\ConsultantPortal.Shared.Models.csproj.AssemblyReference.cache
+D:\WorkSpace\consultant-portal\src\ConsultantPortal.Shared\Models\obj\Debug\net9.0\ConsultantPortal.Shared.Models.GeneratedMSBuildEditorConfig.editorconfig
+D:\WorkSpace\consultant-portal\src\ConsultantPortal.Shared\Models\obj\Debug\net9.0\ConsultantPortal.Shared.Models.AssemblyInfoInputs.cache
+D:\WorkSpace\consultant-portal\src\ConsultantPortal.Shared\Models\obj\Debug\net9.0\ConsultantPortal.Shared.Models.AssemblyInfo.cs
+D:\WorkSpace\consultant-portal\src\ConsultantPortal.Shared\Models\obj\Debug\net9.0\ConsultantPortal.Shared.Models.csproj.CoreCompileInputs.cache
+D:\WorkSpace\consultant-portal\src\ConsultantPortal.Shared\Models\obj\Debug\net9.0\ConsultantPortal.Shared.Models.sourcelink.json
+D:\WorkSpace\consultant-portal\src\ConsultantPortal.Shared\Models\obj\Debug\net9.0\ConsultantPortal.Shared.Models.dll
+D:\WorkSpace\consultant-portal\src\ConsultantPortal.Shared\Models\obj\Debug\net9.0\refint\ConsultantPortal.Shared.Models.dll
+D:\WorkSpace\consultant-portal\src\ConsultantPortal.Shared\Models\obj\Debug\net9.0\ConsultantPortal.Shared.Models.pdb
+D:\WorkSpace\consultant-portal\src\ConsultantPortal.Shared\Models\obj\Debug\net9.0\ref\ConsultantPortal.Shared.Models.dll
