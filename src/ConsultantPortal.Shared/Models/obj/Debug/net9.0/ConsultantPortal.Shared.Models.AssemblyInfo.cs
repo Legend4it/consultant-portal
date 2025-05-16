@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("ConsultantPortal.Shared.Models")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+9c5b1a7770cf21cd0de7fa678caf7edd45af0a24")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+a41d7fd54fd4c5e264806d7af6497af0579c8692")]
 [assembly: System.Reflection.AssemblyProductAttribute("ConsultantPortal.Shared.Models")]
 [assembly: System.Reflection.AssemblyTitleAttribute("ConsultantPortal.Shared.Models")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
