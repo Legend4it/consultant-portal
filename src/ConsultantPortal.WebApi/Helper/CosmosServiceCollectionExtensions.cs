@@ -26,7 +26,7 @@ public static class CosmosServiceCollectionExtensions
             return new CosmosDbService<T>(
                 client,
                 settings.DatabaseName!,
-                containerName
+                settings.ContainerName!
             );
         });
 

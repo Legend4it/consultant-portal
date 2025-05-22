@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsultantPortal.Shared.Mod
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsultantPortal.Api", "src\ConsultantPortal.WebApi\ConsultantPortal.Api.csproj", "{DC7D8D1A-A860-0CCD-2112-232B1D2DAFF8}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsultantPortal.Severless.Tests", "Tests\ConsultantPortal.Severless.Tests\ConsultantPortal.Severless.Tests.csproj", "{5FCD6F7D-7D42-4259-A622-7E8203784928}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,8 +23,15 @@ Global
 		{DC7D8D1A-A860-0CCD-2112-232B1D2DAFF8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DC7D8D1A-A860-0CCD-2112-232B1D2DAFF8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DC7D8D1A-A860-0CCD-2112-232B1D2DAFF8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5FCD6F7D-7D42-4259-A622-7E8203784928}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5FCD6F7D-7D42-4259-A622-7E8203784928}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5FCD6F7D-7D42-4259-A622-7E8203784928}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5FCD6F7D-7D42-4259-A622-7E8203784928}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {C6BC32AA-B824-4D0E-B705-B1A823AB52DD}
 	EndGlobalSection
 EndGlobal
