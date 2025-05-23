@@ -9,7 +9,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsultantPortal.Api", "src
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsultantPortal.Severless.Tests", "Tests\ConsultantPortal.Severless.Tests\ConsultantPortal.Severless.Tests.csproj", "{5FCD6F7D-7D42-4259-A622-7E8203784928}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsultantPortal_Severless", "src\ConsultantPortal.Severless\ConsultantPortal_Severless.csproj", "{BE396423-7FA8-7E4F-084B-A0042018576C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsultantPortal_Severless", "src\ConsultantPortal.Severless\ConsultantPortal.Severless.csproj", "{BE396423-7FA8-7E4F-084B-A0042018576C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
